@@ -20,10 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Event::listen(
-            \Illuminate\Notifications\Events\NotificationFailed::class,
-            \App\Listeners\ReportFailedNotificationListener::class,
-        );
+        // Event::listen(
+        //     \Illuminate\Notifications\Events\NotificationFailed::class,
+        //     \App\Listeners\ReportFailedNotificationListener::class,
+        // );
 
     }
 }

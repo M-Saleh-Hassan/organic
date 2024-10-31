@@ -194,18 +194,12 @@ class UserController extends ApiController implements HasMiddleware
     {
         $request->user()->update($request->validated());
 
-        if ($request->has('image')) {
-            $file = $request->image;
-            $fileName = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
-            $fileHandler = App::make(FileHandlerInterface::class);
-            $path = $fileHandler->upload($file, $fileName, [
-                'folder' => 'Tenants/' . $request->user()->tenant->id . '/Users/' . $request->user()->id
-            ]);
+        if($request->has('password')) {
             $request->user()->update([
-                'image' => $path
+                'password' => Hash::make($request->password),
             ]);
         }
-
+        
         return $this->handleResponse(new UserResource($request->user()->fresh()));
     }
 

@@ -22,13 +22,12 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => 'string',
-            'last_name'  => 'string',
-            'email'      => 'string|email|max:255|unique:users,email,' . $this->user()->id,
-            'phone'      => 'string',
-            'company'    => 'string',
-            'position'   => 'string',
-            'image'      => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000'
+            'full_name'   => 'string|max:255',
+            'email'       => 'string|email|max:255|unique:users,email,' . $this->user()->id,
+            'phone_number'=> 'string|unique:users,email,' . $this->user()->id,
+            'id_type'     => 'string|in:passport,national_id',
+            'id_number'   => 'string|max:50|unique:users,email,' . $this->user()->id,
+            'password'    => 'string|min:8',
         ];
     }
 }

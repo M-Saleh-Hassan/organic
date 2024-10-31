@@ -15,17 +15,14 @@ class LoginResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'          => $this->id,
-            'first_name'  => $this->first_name,
-            'last_name'   => $this->last_name,
-            'email'       => $this->email,
-            'image'       => $this->profile_image,
-            'phone'       => $this->phone,
-            'company'     => $this->company,
-            'position'    => $this->position,
-            'role'        => $this->role->name,
-            'permissions' => RoleResource::collection($this->permissions),
-            'token'       => $this->createToken('auth-token', $this->permissions()->pluck('name')->toArray())->plainTextToken
+            'id'           => $this->id,
+            'full_name'    => $this->full_name,
+            'email'        => $this->email,
+            'id_type'      => $this->id_type,
+            'id_number'    => $this->id_number,
+            // 'image'        => $this->profile_image,
+            'phone_number' => $this->phone_number,
+            'token'        => $this->createToken('auth-token')->plainTextToken
         ];
     }
 }

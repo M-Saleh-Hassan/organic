@@ -1,24 +1,11 @@
 <?php
 
-namespace App\Http\Requests\FloorPlan;
+namespace App\Http\Requests\Auth;
 
-use App\Rules\ProjectBelongsToTenant;
 use Illuminate\Foundation\Http\FormRequest;
 
-class IndexFloorPlanRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'project_id' => $this->project->id
-        ]);
-    }
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -35,8 +22,12 @@ class IndexFloorPlanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id'   => ['required', 'exists:projects,id', new ProjectBelongsToTenant],
+            'full_name'   => 'required|string|max:255',
+            'email'       => 'required|string|email|max:255|unique:users',
+            'phone_number'=> 'required|string|max:15',
+            'id_type'     => 'required|string|in:passport,national_id',
+            'id_number'   => 'required|string|max:50|unique:users',
+            'password'    => 'required|string|min:8',
         ];
     }
-
 }

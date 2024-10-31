@@ -20,40 +20,48 @@ class UserSeeder extends Seeder
         if(User::count() > 4) return ;
         $users = [
             [
-                'first_name' => 'John',
-                'last_name' => 'Smith',
-                'position' => 'Painter',
+                'full_name' => 'John Smith',
+                'email' => 'john.smith@example.com',
+                'phone_number' => '1234567890',
+                'id_type' => 'passport',
+                'id_number' => 'A12345678',
+                'password' => '12345678',
             ],
             [
-                'first_name' => 'Dan',
-                'last_name' => 'Brown',
-                'position' => 'Electrian',
+                'full_name' => 'Dan Brown',
+                'email' => 'dan.brown@example.com',
+                'phone_number' => '0987654321',
+                'id_type' => 'national_id',
+                'id_number' => 'N987654321',
+                'password' => '12345678',
             ],
             [
-                'first_name' => 'Phil',
-                'last_name' => 'Jeffrey',
-                'position' => 'Plumber',
+                'full_name' => 'Phil Jeffrey',
+                'email' => 'phil.jeffrey@example.com',
+                'phone_number' => '1122334455',
+                'id_type' => 'passport',
+                'id_number' => 'B11223344',
+                'password' => '12345678',
             ],
             [
-                'first_name' => 'Noah',
-                'last_name' => 'Hunt',
-                'position' => 'Carpenter',
+                'full_name' => 'Noah Hunt',
+                'email' => 'noah.hunt@example.com',
+                'phone_number' => '5566778899',
+                'id_type' => 'national_id',
+                'id_number' => 'N55667788',
+                'password' => '12345678',
             ]
         ];
         foreach ($users as $data) {
             $user = User::create([
-                'tenant_id'  => Tenant::where('name', 'test')->first()?->id,
-                'role_id'    => Role::where('name', 'subcontractor')->first()?->id,
-                'first_name' => $data['first_name'],
-                'last_name'  => $data['last_name'],
-                'email'      => $data['first_name'].'@rxa.com',
-                'password'   => Hash::make('12345678'),
-                'phone'      => '12345678',
-                'company'    => 'RXA',
-                'position'   => $data['position'],
+                'role_id'    => Role::where('name', 'client')->first()?->id,
+                'full_name'  => $data['full_name'],
+                'email'      => $data['email'],
+                'password'   => Hash::make($data['password']),
+                'phone_number' => $data['phone_number'],
+                'id_type'    => $data['id_type'],
+                'id_number'  => $data['id_number'],
             ]);
-
-            $user->permissions()->attach(Permission::all()->pluck('id')->toArray());
         }
     }
 }

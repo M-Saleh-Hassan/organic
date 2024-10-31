@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\LoginResource;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,18 +18,29 @@ class AuthController extends ApiController
     public function login(LoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
-        if (!$user
+        if (
+            !$user
             || !Hash::check($request->password, $user->password)
-            || ($this->getSubdomain($request) != null && $user->tenant->domain_name !== $this->getSubdomain($request))
         ) {
             throw ValidationException::withMessages([
                 'email' => [__('auth.failed')]
             ]);
         }
 
-        if($request->has('token')) {
-            $user->update(['device_token' => $request->token]);
-        }
+        return $this->handleResponse(new LoginResource($user));
+    }
+
+    public function register(RegisterRequest $request)
+    {
+        $user = User::create([
+            'role_id'      => Role::where('name', 'client')->first()?->id,
+            'full_name'    => $request->full_name,
+            'email'        => $request->email,
+            'password'     => Hash::make($request->password),
+            'phone_number' => $request->phone_number,
+            'id_type'      => $request->id_type,
+            'id_number'    => $request->id_number,
+        ]);
 
         return $this->handleResponse(new LoginResource($user));
     }
@@ -84,25 +97,4 @@ class AuthController extends ApiController
         return response()->json(['message' => 'Failed to reset password.'], 500);
     }
 
-    private function getSubdomain(Request $request)
-    {
-        // Get the referer header
-        $referer = $request->headers->get('referer');
-
-        if ($referer) {
-            // Parse the URL to extract the host
-            $host = parse_url($referer, PHP_URL_HOST);
-
-            // Split the host by dot (.)
-            $hostParts = explode('.', $host);
-
-            // Assuming your domain is "theloctech.com", get the subdomain
-            if (count($hostParts) > 2) {
-                $subdomain = $hostParts[0]; // This will get "rxa" from "rxa.theloctech.com"
-            } else {
-                $subdomain = null; // No subdomain present
-            }
-            return $subdomain;
-        }
-    }
 }
