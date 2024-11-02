@@ -34,16 +34,21 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        $request = request();
+
+        if ($request->is('password/reset')) {
+            return ;
+        }
         $response = new ResponseObject();
 
-        $exceptions->render(function (BadRequestException $exception, Request $request) use ($response) {
-            $response->errors = ['message' => $exception->getBadRequestMassege()];
+        $exceptions->render(function (BadRequestException $exception) use ($response) {
+            $response->errors = ['message' => $exception->getMessage()];
             $response->exception = get_class($exception);
             $response->statusCode = Response::HTTP_BAD_REQUEST;
             return response()->json($response, $response->statusCode);
         });
 
-        $exceptions->render(function (ModelNotFoundException $exception, Request $request) use ($response) {
+        $exceptions->render(function (ModelNotFoundException $exception) use ($response) {
             $modelName = substr($exception->getModel(), (strrpos($exception->getModel(), '\\') + 1));
             $response->errors = ['message' => 'You try to get model (' . $modelName . ') by wrong id.'];
             $response->exception = get_class($exception);
@@ -51,21 +56,21 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json($response, $response->statusCode);
         });
 
-        $exceptions->render(function (AuthenticationException $exception, Request $request) use ($response) {
+        $exceptions->render(function (AuthenticationException $exception) use ($response) {
             $response->errors = ['message' => 'This action is unauthenticated'];
             $response->exception = get_class($exception);
             $response->statusCode = Response::HTTP_UNAUTHORIZED;
             return response()->json($response, $response->statusCode);
         });
 
-        $exceptions->render(function (AuthorizationException $exception, Request $request) use ($response) {
+        $exceptions->render(function (AuthorizationException $exception) use ($response) {
             $response->errors = ['message' => 'This action is unauthorized'];
             $response->exception = get_class($exception);
             $response->statusCode = Response::HTTP_FORBIDDEN;
             return response()->json($response, $response->statusCode);
         });
 
-        $exceptions->render(function (ValidationException $exception, Request $request) use ($response) {
+        $exceptions->render(function (ValidationException $exception) use ($response) {
             $errorMessages = [];
             foreach ($exception->validator->errors()->getMessages() as $parameter => $messages)
                 $errorMessages[$parameter] = $messages;
@@ -75,28 +80,28 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json($response, $response->statusCode);
         });
 
-        $exceptions->render(function (AccessDeniedHttpException $exception, Request $request) use ($response) {
+        $exceptions->render(function (AccessDeniedHttpException $exception) use ($response) {
             $response->errors = ['message' => $exception->getMessage()];
             $response->exception = get_class($exception);
             $response->statusCode = Response::HTTP_FORBIDDEN;
             return response()->json($response, $response->statusCode);
         });
 
-        $exceptions->render(function (HttpException $exception, Request $request) use ($response) {
+        $exceptions->render(function (HttpException $exception) use ($response) {
             $response->errors = ['message' => $exception->getMessage()];
             $response->exception = get_class($exception);
             $response->statusCode = Response::HTTP_NOT_FOUND;
             return response()->json($response, $response->statusCode);
         });
 
-        $exceptions->render(function (RequestException $exception, Request $request) use ($response) {
+        $exceptions->render(function (RequestException $exception) use ($response) {
             $response->errors = ['message' => $exception->getMessage()];
             $response->exception = get_class($exception);
             $response->statusCode = Response::HTTP_NOT_FOUND;
             return response()->json($response, $response->statusCode);
         });
 
-        $exceptions->render(function (Throwable $exception, Request $request) use ($response) {
+        $exceptions->render(function (Throwable $exception) use ($response) {
             if (App::environment('local', 'staging')) {
                 $response->errors = [
                     'message'   => $exception->getMessage()
