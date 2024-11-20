@@ -25,29 +25,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use League\Csv\Reader;
 
-class UserController extends ApiController implements HasMiddleware
+class UserController extends ApiController
 {
-    protected static $nonAuthorizedFunctions = [
-        'getProfile',
-        'updateProfile',
-        'updatePassword',
-    ];
-
-    /**
-     * Get the middleware that should be assigned to the controller.
-     */
-    public static function middleware(): array
-    {
-        $routeAction = Route::currentRouteAction();
-        list($controller, $method) = explode('@', $routeAction);
-        if (!in_array($method, self::$nonAuthorizedFunctions)) {
-            return [
-                'authorized:users',
-            ];
-        }
-        return [];
-    }
-
     public function getRoles(Request $request)
     {
         return $this->handleResponseWithCount(RoleResource::collection(Role::all()), Role::count());
@@ -199,7 +178,7 @@ class UserController extends ApiController implements HasMiddleware
                 'password' => Hash::make($request->password),
             ]);
         }
-        
+
         return $this->handleResponse(new UserResource($request->user()->fresh()));
     }
 
