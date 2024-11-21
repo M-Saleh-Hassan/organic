@@ -26,9 +26,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // $middleware->alias([
-        //     'authorized' => HasPermissionMiddleware::class
-        // ]);
+        $middleware->alias([
+            'authorized' => HasPermissionMiddleware::class,
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        ]);
         $middleware->use([
             \Illuminate\Http\Middleware\HandleCors::class,
         ]);

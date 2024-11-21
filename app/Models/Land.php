@@ -16,7 +16,7 @@ class Land extends Model
         'size',
         'number_of_pits',
         'number_of_palms',
-        'cultivation_year',
+        'cultivation_count',
         'missing_count',
     ];
 

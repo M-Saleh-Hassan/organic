@@ -69,3 +69,22 @@
         </div>
     </div>
 @stop
+@section('js')
+    <script>
+        window.onload = function() {
+            // Select the specific SVG element with the exact class
+            const svgElements = document.querySelectorAll('svg.w-5.h-5');
+
+            // Remove the element if it exists
+            svgElements.forEach(function(svg) {
+                svg.remove(); // Remove each SVG
+            });
+
+        };
+    </script>
+@stop
+@section('footer')
+    <form id="logout-form" action="{{ route('admin/logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+@stop

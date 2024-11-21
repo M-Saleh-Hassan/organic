@@ -27,6 +27,22 @@ class AdminController extends Controller
         ]);
     }
 
+    public function logout(Request $request)
+    {
+        // Log the user out
+        Auth::logout();
+
+        // Invalidate the session
+        $request->session()->invalidate();
+
+        // Regenerate the CSRF token
+        $request->session()->regenerateToken();
+
+        // Redirect to login page or home
+        return redirect()->route('admin.login')->with('success', 'You have been logged out successfully!');
+    }
+
+
     public function dashboard()
     {
         return view('admin.dashboard');

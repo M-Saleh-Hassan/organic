@@ -24,3 +24,10 @@
         </div>
     </div>
 @stop
+
+@section('footer')
+    <form id="logout-form" action="{{ route('admin/logout') }}" method="POST" style="display: none;">
+
+        @csrf
+    </form>
+@stop

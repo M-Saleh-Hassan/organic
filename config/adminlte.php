@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>Organic</b> Admin',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'organic.jpeg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'organic.jpeg',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -113,8 +113,8 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'path' => 'organic.jpeg',
+            'alt' => 'Organic',
             'effect' => 'animation__shake',
             'width' => 60,
             'height' => 60,
@@ -404,6 +404,12 @@ return [
             'url' => 'admin/users',
             'icon' => 'fas fa-fw fa-users',
             'active' => ['admin/users*'],
+        ],
+        [
+            'text' => 'Lands',
+            'url'  => 'admin/lands',
+            'icon' => 'fas fa-seedling', // Use a relevant icon for Lands
+            'active' => ['admin/lands*'],
         ],
         [
             'text' => 'Financials',
