@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FinancialController;
+use App\Http\Controllers\Admin\FinancialRecordController;
 use App\Http\Controllers\API\AuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -24,5 +25,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::post('login', [AdminController::class, 'auth'])->name('admin.login.post');
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('users', [AdminController::class, 'users'])->name('admin.users');
+
     Route::resource('financials', FinancialController::class, ['as' => 'admin']);
+    Route::resource('financials.records', FinancialRecordController::class, ['as' => 'admin'])->shallow();
+
 });

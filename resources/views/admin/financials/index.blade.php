@@ -3,7 +3,22 @@
 @section('title', 'Financials')
 
 @section('content_header')
-    <h1>Financial Records</h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>Financial Records</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Financials</li>
+                </ol>
+            </nav>
+        </div>
+        <div>
+            <a href="{{ route('admin.financials.create') }}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Add Financial Record
+            </a>
+        </div>
+    </div>
 @stop
 
 @section('content')
@@ -11,9 +26,6 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
     <div class="card">
-        <div class="card-header">
-            <a href="{{ route('admin.financials.create') }}" class="btn btn-success">Add Financial Record</a>
-        </div>
         <div class="card-body">
             <table class="table table-bordered">
                 <thead>
@@ -35,6 +47,11 @@
                                 <a href="{{ asset('storage/' . $financial->file_path) }}" target="_blank">View File</a>
                             </td>
                             <td>
+                                <!-- Link to Financial Records -->
+                                <a href="{{ route('admin.financials.records.index', $financial) }}"
+                                    class="btn btn-info btn-sm">
+                                    <i class="fas fa-list"></i> Records
+                                </a>
                                 <a href="{{ route('admin.financials.edit', $financial) }}"
                                     class="btn btn-primary btn-sm">Edit</a>
                                 <form action="{{ route('admin.financials.destroy', $financial) }}" method="POST"
