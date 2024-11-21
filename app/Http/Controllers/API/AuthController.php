@@ -100,7 +100,7 @@ class AuthController extends ApiController
 
     public function showResetForm(Request $request, $token = null)
     {
-        return view('auth.passwords.reset')->with(
+        return view('auth.passwords.reset_app')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }

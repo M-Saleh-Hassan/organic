@@ -17,20 +17,14 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        if(!User::exists()) {
-            $user = User::create([
-                'tenant_id'  => Tenant::where('name', 'test')->first()?->id,
-                'role_id'    => Role::where('name', 'admin')->first()?->id,
-                'first_name' => 'RXA',
-                'last_name'  => 'Admin',
-                'email'      => 'admin@rxa.com',
-                'password'   => Hash::make('12345678'),
-                'phone'      => '12345678',
-                'company'    => 'RXA',
-                'position'   => 'CEO'
-            ]);
-
-            $user->permissions()->attach(Permission::all()->pluck('id')->toArray());
-        }
+        User::create([
+            'role_id' => 1, // Assuming 1 is the role ID for admin
+            'full_name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'phone_number' => '12345678902',
+            'id_type' => 'passport', // or 'national_id'
+            'id_number' => 'A123456728',
+            'password' => Hash::make('password'),
+        ]);
     }
 }
