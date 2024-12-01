@@ -72,9 +72,11 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (ValidationException $exception) use ($response) {
-            $errorMessages = [];
-            foreach ($exception->validator->errors()->getMessages() as $parameter => $messages)
-                $errorMessages[$parameter] = $messages;
+            $errorMessages = '';
+            foreach ($exception->validator->errors()->getMessages() as $parameter => $messages) {
+                $errorMessages = $messages[0];
+                break;
+            }
             $response->errors = $errorMessages;
             $response->exception = get_class($exception);
             $response->statusCode = Response::HTTP_UNPROCESSABLE_ENTITY;
