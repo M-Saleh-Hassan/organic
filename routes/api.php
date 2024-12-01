@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ContractController;
 use App\Http\Controllers\API\FinancialController;
 use App\Http\Controllers\API\LandController;
+use App\Http\Controllers\API\MediaController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OperationController;
 use App\Http\Controllers\API\ProductionController;
@@ -40,6 +41,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('financials', [FinancialController::class, 'index']);
     Route::get('financials/{financial}', [FinancialController::class, 'show']);
+
+    Route::get('media', [MediaController::class, 'index']);
+    Route::get('media/{media}', [MediaController::class, 'show']);
 
     Route::get('notifications', [NotificationController::class, 'index']);
     Route::post('notifications/{noification}/read', [NotificationController::class, 'markAsRead']);
