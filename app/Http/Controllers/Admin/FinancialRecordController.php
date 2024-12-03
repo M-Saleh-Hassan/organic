@@ -34,12 +34,12 @@ class FinancialRecordController extends Controller
             ->with('success', 'Financial record added successfully!');
     }
 
-    public function edit(FinancialRecord $record)
+    public function edit(Financial $financial, FinancialRecord $record)
     {
         return view('admin.financial_records.edit', compact('record'));
     }
 
-    public function update(Request $request, FinancialRecord $record)
+    public function update(Request $request, Financial $financial, FinancialRecord $record)
     {
         $validated = $request->validate([
             'month' => 'required|string|max:255',
@@ -53,11 +53,11 @@ class FinancialRecordController extends Controller
             ->with('success', 'Financial record updated successfully!');
     }
 
-    public function destroy(FinancialRecord $record)
+    public function destroy(Financial $financial, FinancialRecord $record)
     {
         $record->delete();
 
-        return redirect()->route('admin.financials.records.index', $record->financial_id)
+        return redirect()->route('admin.financials.records.index', $financial->id)
             ->with('success', 'Financial record deleted successfully!');
     }
 }

@@ -422,6 +422,11 @@ return [
             'icon' => 'fas fa-tasks',
         ],
         [
+            'text' => 'Productions',
+            'url'  => 'admin/productions',
+            'icon' => 'fas fa-leaf',
+        ],
+        [
             'text' => 'Financials',
             'url' => 'admin/financials',
             'icon' => 'fas fa-fw fa-dollar-sign',

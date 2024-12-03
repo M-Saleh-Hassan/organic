@@ -34,12 +34,12 @@ class OperationDetailController extends Controller
             ->with('success', 'Operation detail added successfully!');
     }
 
-    public function edit(OperationDetail $detail)
+    public function edit(Operation $operation, OperationDetail $detail)
     {
         return view('admin.operation_details.edit', compact('detail'));
     }
 
-    public function update(Request $request, OperationDetail $detail)
+    public function update(Request $request, Operation $operation, OperationDetail $detail)
     {
         $validated = $request->validate([
             'type' => 'required|string|max:255',
@@ -49,15 +49,15 @@ class OperationDetailController extends Controller
 
         $detail->update($validated);
 
-        return redirect()->route('admin.operations.details.index', $detail->operation_id)
+        return redirect()->route('admin.operations.details.index', $operation->id)
             ->with('success', 'Operation detail updated successfully!');
     }
 
-    public function destroy(OperationDetail $detail)
+    public function destroy(Operation $operation, OperationDetail $detail)
     {
         $detail->delete();
 
-        return redirect()->route('admin.operations.details.index', $detail->operation_id)
+        return redirect()->route('admin.operations.details.index', $operation->id)
             ->with('success', 'Operation detail deleted successfully!');
     }
 }
