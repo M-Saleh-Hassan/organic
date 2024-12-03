@@ -417,6 +417,11 @@ return [
             'icon' => 'fas fa-file-contract',
         ],
         [
+            'text' => 'Operations',
+            'url'  => 'admin/operations',
+            'icon' => 'fas fa-tasks',
+        ],
+        [
             'text' => 'Financials',
             'url' => 'admin/financials',
             'icon' => 'fas fa-fw fa-dollar-sign',

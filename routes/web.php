@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\FinancialRecordController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Admin\LandController;
+use App\Http\Controllers\Admin\OperationController;
+use App\Http\Controllers\Admin\OperationDetailController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +35,8 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('users', UserController::class, ['as' => 'admin']);
     Route::resource('lands', LandController::class, ['as' => 'admin']);
     Route::resource('contracts', ContractController::class, ['as' => 'admin']);
+    Route::resource('operations', OperationController::class, ['as' => 'admin']);
+    Route::resource('operations.details', OperationDetailController::class, ['as' => 'admin']);
     Route::resource('financials', FinancialController::class, ['as' => 'admin']);
     Route::resource('financials.records', FinancialRecordController::class, ['as' => 'admin'])->shallow();
 
