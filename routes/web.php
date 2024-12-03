@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\FinancialRecordController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Admin\LandController;
+use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\MediaImageController;
+use App\Http\Controllers\Admin\MediaVideoController;
 use App\Http\Controllers\Admin\OperationController;
 use App\Http\Controllers\Admin\OperationDetailController;
 use App\Http\Controllers\Admin\ProductionController;
@@ -47,4 +50,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('financials', FinancialController::class, ['as' => 'admin']);
     Route::resource('financials.records', FinancialRecordController::class, ['as' => 'admin']);
 
+    Route::resource('media', MediaController::class, ['as' => 'admin']);
+    Route::resource('media.images', MediaImageController::class, ['as' => 'admin']);
+    Route::resource('media.videos', MediaVideoController::class, ['as' => 'admin']);
 });

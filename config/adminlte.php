@@ -432,6 +432,12 @@ return [
             'icon' => 'fas fa-fw fa-dollar-sign',
             'active' => ['admin/financials*'],
         ],
+        [
+            'text' => 'Media',
+            'url' => 'admin/media',
+            'icon' => 'fas fa-photo-video',
+            'active' => ['admin/media*'],
+        ],
     ],
 
     /*
