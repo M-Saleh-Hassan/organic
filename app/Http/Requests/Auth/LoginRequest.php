@@ -24,8 +24,6 @@ class LoginRequest extends FormRequest
         return [
             'email'       => 'required|string|email',
             'password'    => 'required|string',
-            'token'       => 'string',
-            // 'domain'      => 'exists:tenants,domain_name'
         ];
     }
 }

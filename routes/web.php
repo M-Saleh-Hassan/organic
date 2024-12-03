@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ContractController;
 use App\Http\Controllers\Admin\FinancialController;
 use App\Http\Controllers\Admin\FinancialRecordController;
 use App\Http\Controllers\Admin\UserController;
@@ -31,6 +32,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::resource('users', UserController::class, ['as' => 'admin']);
     Route::resource('lands', LandController::class, ['as' => 'admin']);
+    Route::resource('contracts', ContractController::class, ['as' => 'admin']);
     Route::resource('financials', FinancialController::class, ['as' => 'admin']);
     Route::resource('financials.records', FinancialRecordController::class, ['as' => 'admin'])->shallow();
 

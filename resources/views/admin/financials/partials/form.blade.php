@@ -37,7 +37,7 @@
     <input type="file" name="file_path" id="file_path" class="form-control @error('file_path') is-invalid @enderror" accept=".xls,.xlsx">
     @if (isset($financial) && $financial->file_path)
         <small class="form-text text-muted">
-            Current File: <a href="{{ asset('storage/' . $financial->file_path) }}" target="_blank">View File</a>
+            Current File: <a href="{{ asset($financial->file_path) }}" target="_blank">View File</a>
         </small>
     @endif
     @error('file_path')

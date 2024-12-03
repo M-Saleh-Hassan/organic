@@ -412,6 +412,11 @@ return [
             'active' => ['admin/lands*'],
         ],
         [
+            'text' => 'Contracts',
+            'url'  => 'admin/contracts',
+            'icon' => 'fas fa-file-contract',
+        ],
+        [
             'text' => 'Financials',
             'url' => 'admin/financials',
             'icon' => 'fas fa-fw fa-dollar-sign',

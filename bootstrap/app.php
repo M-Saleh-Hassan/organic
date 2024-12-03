@@ -37,7 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         $request = request();
 
-        if ($request->is('password/reset')) {
+        if ($request->is('password/reset') || $request->is('admin/*')) {
             return ;
         }
         $response = new ResponseObject();
