@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\UserCreatedNotification;
+use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasName
 {
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -67,5 +68,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function getFilamentName(): string
+    {
+        // Return the name or a fallback value
+        return $this->full_name ?? $this->email ?? 'Default User';
+    }
+
 
 }

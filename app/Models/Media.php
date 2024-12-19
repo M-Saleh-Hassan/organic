@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
@@ -13,6 +14,27 @@ class Media extends Model
         'user_id',
         'land_id',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($media) {
+            foreach ($media->images as $img) {
+                if ($img->file_path) {
+                    Storage::delete($img->file_path);
+                }
+                $img->delete();
+            }
+
+            foreach ($media->videos as $video) {
+                if ($video->file_path) {
+                    Storage::delete($video->file_path);
+                }
+                $video->delete();
+            }
+        });
+    }
 
     public function user()
     {

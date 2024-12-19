@@ -10,7 +10,7 @@ class FinancialResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'file_url' => asset('financials/' . $this->file_path), // Generate full file URL
+            'file_url' => asset($this->file_path), // Generate full file URL
             'records' => $this->records->map(function ($record) {
                 return [
                     'id' => $record->id,

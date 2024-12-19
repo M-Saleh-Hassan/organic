@@ -29,10 +29,10 @@ Route::get('password/success', function () {
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
-Route::post('admin/login', [AdminController::class, 'auth'])->name('admin.login.post');
+Route::get('v1/admin//login', [AdminController::class, 'login'])->name('admin.login');
+Route::post('v1/admin/login', [AdminController::class, 'auth'])->name('admin.login.post');
 
-Route::prefix('admin')->middleware(['admin'])->group(function () {
+Route::prefix('v1/admin')->middleware(['admin'])->group(function () {
     Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 

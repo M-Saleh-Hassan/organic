@@ -25,9 +25,9 @@ class ContractResource extends JsonResource
                 'land_number' => $this->land->land_number,
             ],
             'documents' => [
-                'sponsorship_contract_url' => asset('contracts/' . $this->sponsorship_contract_path),
-                'participation_contract_url' => asset('contracts/' . $this->participation_contract_path),
-                'personal_id_url' => asset('contracts/' . $this->personal_id_path),
+                'sponsorship_contract_url' => asset( $this->sponsorship_contract_path),
+                'participation_contract_url' => asset( $this->participation_contract_path),
+                'personal_id_url' => asset( $this->personal_id_path),
             ],
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),

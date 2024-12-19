@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Financial extends Model
 {
@@ -14,6 +15,17 @@ class Financial extends Model
         'land_id',
         'file_path',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($financial) {
+            if ($financial->file_path) {
+                Storage::delete($financial->file_path);
+            }
+        });
+    }
 
     public function user()
     {
@@ -29,5 +41,4 @@ class Financial extends Model
     {
         return $this->hasMany(FinancialRecord::class);
     }
-
 }
