@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class MediaResource extends JsonResource
 {
@@ -21,14 +22,14 @@ class MediaResource extends JsonResource
             'images' => $this->images->map(function ($image) {
                 return [
                     'id' => $image->id,
-                    'file_path' => asset($image->file_path),
+                    'file_path' => Storage::url($image->file_path),
                     'date' => $image->date,
                 ];
             }),
             'videos' => $this->videos->map(function ($video) {
                 return [
                     'id' => $video->id,
-                    'file_path' => asset($video->file_path),
+                    'file_path' => Storage::url($video->file_path),
                     'date' => $video->date,
                 ];
             }),

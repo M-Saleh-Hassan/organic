@@ -6,6 +6,7 @@ use App\Filament\Resources\ContractResource\Pages;
 use App\Filament\Resources\ContractResource\RelationManagers;
 use App\Models\Contract;
 use App\Models\Land;
+use App\Rules\UniqueUserLandRule;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ContractResource extends Resource
 {
@@ -41,7 +43,12 @@ class ContractResource extends Resource
                             ->required()
                             ->searchable()
                             ->reactive()
-                            ->afterStateUpdated(fn(callable $set) => $set('land_id', null)),
+                            ->afterStateUpdated(fn(callable $set) => $set('land_id', null))
+                            ->rules(function (callable $get) {
+                                return [
+                                    new UniqueUserLandRule('contracts', $get('user_id'), $get('land_id')),
+                                ];
+                            }),
 
                         Select::make('land_id')
                             ->label('Land')

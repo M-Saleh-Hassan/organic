@@ -7,6 +7,7 @@ use App\Filament\Resources\FinancialResource\RelationManagers;
 use App\Filament\Resources\FinancialResource\RelationManagers\RecordsRelationManager;
 use App\Models\Financial;
 use App\Models\Land;
+use App\Rules\UniqueUserLandRule;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
@@ -42,7 +43,12 @@ class FinancialResource extends Resource
                             ->required()
                             ->searchable()
                             ->reactive()
-                            ->afterStateUpdated(fn(callable $set) => $set('land_id', null)),
+                            ->afterStateUpdated(fn(callable $set) => $set('land_id', null))
+                            ->rules(function (callable $get) {
+                                return [
+                                    new UniqueUserLandRule('financials', $get('user_id'), $get('land_id')),
+                                ];
+                            }),
 
                         Select::make('land_id')
                             ->label('Land')

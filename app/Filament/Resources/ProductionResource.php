@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductionResource\Pages;
 use App\Filament\Resources\ProductionResource\RelationManagers\DetailsRelationManager;
 use App\Models\Land;
 use App\Models\Production;
+use App\Rules\UniqueUserLandRule;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -37,7 +38,12 @@ class ProductionResource extends Resource
                             ->required()
                             ->searchable()
                             ->reactive()
-                            ->afterStateUpdated(fn(callable $set) => $set('land_id', null)),
+                            ->afterStateUpdated(fn(callable $set) => $set('land_id', null))
+                            ->rules(function (callable $get) {
+                                return [
+                                    new UniqueUserLandRule('productions', $get('user_id'), $get('land_id')),
+                                ];
+                            }),
 
                         Select::make('land_id')
                             ->label('Land')

@@ -8,6 +8,7 @@ use App\Filament\Resources\MediaResource\RelationManagers\ImagesRelationManager;
 use App\Filament\Resources\MediaResource\RelationManagers\VideosRelationManager;
 use App\Models\Land;
 use App\Models\Media;
+use App\Rules\UniqueUserLandRule;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -40,7 +41,12 @@ class MediaResource extends Resource
                             ->required()
                             ->searchable()
                             ->reactive()
-                            ->afterStateUpdated(fn(callable $set) => $set('land_id', null)),
+                            ->afterStateUpdated(fn(callable $set) => $set('land_id', null))
+                            ->rules(function (callable $get) {
+                                return [
+                                    new UniqueUserLandRule('media', $get('user_id'), $get('land_id')),
+                                ];
+                            }),
 
                         Select::make('land_id')
                             ->label('Land')

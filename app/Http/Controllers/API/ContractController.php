@@ -13,7 +13,7 @@ class ContractController extends ApiController
         $filters = $this->getFilters($request);
         $contracts = Contract::with(['user', 'land'])->where('user_id', auth()->id())
             ->orderBy($filters['order_by'], $filters['order_type'])
-            ->paginate($filters['limit']);;
+            ->paginate($filters['limit']);
         return $this->handlePaginateResponse(ContractResource::collection($contracts));
     }
 
