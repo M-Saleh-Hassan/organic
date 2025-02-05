@@ -16,7 +16,6 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/password/email', [AuthController::class, 'sendResetLinkEmail']);
     Route::post('/password/reset', [AuthController::class, 'reset']);
-    Route::post('account/delete', [AuthController::class, 'destroy']);
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -48,6 +47,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('notifications', [NotificationController::class, 'index']);
     Route::post('notifications/{noification}/read', [NotificationController::class, 'markAsRead']);
+
+    Route::post('account/delete', [AuthController::class, 'destroy']);
 });
 //Client ID
 //1008613414258-h416hulu0uipebilv3cp9uqf3avh25s1.apps.googleusercontent.com
