@@ -25,8 +25,8 @@ class RegisterRequest extends FormRequest
             'full_name'   => 'required|string|max:255',
             'email'       => 'required|string|email|max:255|unique:users',
             'phone_number'=> 'required|string|max:15',
-            'id_type'     => 'required|string|in:passport,national_id',
-            'id_number'   => 'required|string|max:50|unique:users',
+            'id_type'     => 'string|in:passport,national_id',
+            'id_number'   => 'string|max:50|unique:users',
             'password'    => 'required|string|min:8',
         ];
     }
