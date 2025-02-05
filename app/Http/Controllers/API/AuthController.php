@@ -127,4 +127,13 @@ class AuthController extends ApiController
             ? redirect()->route('password.success')
             : back()->withErrors(['email' => [__($status)]]);
     }
+
+    public function destroy(Request $request)
+    {
+        $request->user()->delete();
+
+        return response()->json([
+            'message' => 'User deleted successfully'
+        ], 200);
+    }
 }
